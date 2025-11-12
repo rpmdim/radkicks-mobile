@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:radkicks/menu.dart';
+import 'package:radkicks/screens/menu.dart';
 
 void main() {
   runApp(const MyApp());
