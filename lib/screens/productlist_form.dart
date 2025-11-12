@@ -185,7 +185,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
                   decoration: InputDecoration(
-                    hintText: 'Masukkan Brand Produk (opsional)',
+                    hintText: 'Masukkan Brand Produk',
                     labelText: 'Brand Produk',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
@@ -196,6 +196,12 @@ class _ProductFormPageState extends State<ProductFormPage> {
                       _brand = value!;
                     });
                   },
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Brand produk tidak boleh kosong!';
+                    }
+                    return null;
+                  },
                 ),
               ),
               // === Size ===
@@ -203,7 +209,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
                   decoration: InputDecoration(
-                    hintText: 'Masukkan Ukuran Produk (opsional)',
+                    hintText: 'Masukkan Ukuran Produk',
                     labelText: 'Ukuran Produk',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
@@ -213,6 +219,12 @@ class _ProductFormPageState extends State<ProductFormPage> {
                     setState(() {
                       _size = value!;
                     });
+                  },
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Ukuran produk tidak boleh kosong!';
+                    }
+                    return null;
                   },
                 ),
               ),
@@ -240,6 +252,12 @@ class _ProductFormPageState extends State<ProductFormPage> {
                       _category = newValue!;
                     });
                   },
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Kategori tidak boleh kosong!';
+                    }
+                    return null;
+                  },
                 ),
               ),
               // === Thumbnail URL ===
@@ -247,7 +265,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
                   decoration: InputDecoration(
-                    hintText: 'URL Thumbnail (opsional)',
+                    hintText: 'Masukkan URL Thumbnail',
                     labelText: 'URL Thumbnail',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
@@ -257,6 +275,12 @@ class _ProductFormPageState extends State<ProductFormPage> {
                     setState(() {
                       _thumbnail = value!;
                     });
+                  },
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'URL Thumbnail tidak boleh kosong!';
+                    }
+                    return null;
                   },
                 ),
               ),
