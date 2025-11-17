@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:radkicks/screens/menu.dart';
 import 'package:radkicks/screens/productlist_form.dart';
+import 'package:radkicks/screens/product_entry_list.dart';
 
 class LeftDrawer extends StatelessWidget {
   const LeftDrawer({super.key});
@@ -12,7 +13,7 @@ class LeftDrawer extends StatelessWidget {
         children: [
           const DrawerHeader(
             // TODO: Bagian drawer header
-            decoration: BoxDecoration(color: Colors.blue),
+            decoration: BoxDecoration(color: Colors.red),
             child: Column(
               children: [
                 Text(
@@ -60,30 +61,20 @@ class LeftDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.list),
-            title: const Text('List Products'),
+            leading: const Icon(Icons.sports_basketball),
+            title: const Text('Product List'),
             onTap: () {
-              Navigator.pushReplacement(
+              // Route to product list page
+              Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ProductListPage()),
+                MaterialPageRoute(
+                  builder: (context) => const ProductEntryListPage(),
+                ),
               );
             },
           ),
         ],
       ),
-    );
-  }
-}
-
-// untuk melengkapi TODO (placeholder)
-class ProductListPage extends StatelessWidget {
-  const ProductListPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('List Products')),
-      body: const Center(child: Text('Product list goes here')),
     );
   }
 }

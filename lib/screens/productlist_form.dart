@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 // TODO: Impor drawer yang sudah dibuat sebelumnya
 import 'package:radkicks/widgets/left_drawer.dart';
+import 'dart:convert';
+import 'package:provider/provider.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:radkicks/screens/menu.dart';
 
 class ProductFormPage extends StatefulWidget {
   const ProductFormPage({super.key});
@@ -32,10 +36,11 @@ class _ProductFormPageState extends State<ProductFormPage> {
 
   @override
   Widget build(BuildContext context) {
+    final request = context.watch<CookieRequest>();
     return Scaffold(
       appBar: AppBar(
         title: const Center(child: Text('Form Tambah Produk')),
-        backgroundColor: Colors.indigo,
+        backgroundColor: Colors.red[800],
         foregroundColor: Colors.white,
       ),
       // TODO: Tambahkan drawer yang sudah dibuat di sini
@@ -304,48 +309,94 @@ class _ProductFormPageState extends State<ProductFormPage> {
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
                     style: ButtonStyle(
-                      backgroundColor: WidgetStateProperty.all(Colors.indigo),
+                      backgroundColor: WidgetStateProperty.all(Colors.red[800]),
                     ),
-                    onPressed: () {
+                    onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: const Text('Produk berhasil disimpan!'),
-                              content: SingleChildScrollView(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text('Nama: $_name'),
-                                    Text('Deskripsi: $_description'),
-                                    Text('Harga: $_price'),
-                                    Text('Stok: $_stock'),
-                                    Text('Rating: $_rating'),
-                                    Text('Brand: $_brand'),
-                                    Text('Ukuran: $_size'),
-                                    Text('Kategori: $_category'),
-                                    Text('Thumbnail: $_thumbnail'),
-                                    Text(
-                                      'Unggulan: ${_isFeatured ? "Ya" : "Tidak"}',
-                                    ),
-                                  ],
+                        // TODO: Replace the URL with your app's URL
+                        // To connect Android emulator with Django on localhost, use URL http://10.0.2.2/
+                        // If you using chrome,  use URL http://localhost:8000
+
+                        final response = await request.postJson(
+                          "http://localhost:8000/add-product-flutter/",
+                          jsonEncode({
+                            "name": _name,
+                            "description": _description,
+                            "thumbnail": _thumbnail,
+                            "price": _price,
+                            "stock": _stock,
+                            "rating": _rating,
+                            "brand": _brand,
+                            "size": _size,
+                            "category": _category,
+                            "is_featured": _isFeatured,
+                          }),
+                        );
+                        if (context.mounted) {
+                          if (response['status'] == 'success') {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text("Product successfully added!"),
+                              ),
+                            );
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MyHomePage(),
+                              ),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                  "Something went wrong, please try again.",
                                 ),
                               ),
-                              actions: [
-                                TextButton(
-                                  child: const Text('OK'),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                              ],
                             );
-                          },
-                        );
-                        _formKey.currentState!.reset();
+                          }
+                        }
                       }
                     },
+                    // onPressed: () {
+                    //   if (_formKey.currentState!.validate()) {
+                    //     showDialog(
+                    //       context: context,
+                    //       builder: (context) {
+                    //         return AlertDialog(
+                    //           title: const Text('Produk berhasil disimpan!'),
+                    //           content: SingleChildScrollView(
+                    //             child: Column(
+                    //               crossAxisAlignment: CrossAxisAlignment.start,
+                    //               children: [
+                    //                 Text('Nama: $_name'),
+                    //                 Text('Deskripsi: $_description'),
+                    //                 Text('Harga: $_price'),
+                    //                 Text('Stok: $_stock'),
+                    //                 Text('Rating: $_rating'),
+                    //                 Text('Brand: $_brand'),
+                    //                 Text('Ukuran: $_size'),
+                    //                 Text('Kategori: $_category'),
+                    //                 Text('Thumbnail: $_thumbnail'),
+                    //                 Text(
+                    //                   'Unggulan: ${_isFeatured ? "Ya" : "Tidak"}',
+                    //                 ),
+                    //               ],
+                    //             ),
+                    //           ),
+                    //           actions: [
+                    //             TextButton(
+                    //               child: const Text('OK'),
+                    //               onPressed: () {
+                    //                 Navigator.pop(context);
+                    //               },
+                    //             ),
+                    //           ],
+                    //         );
+                    //       },
+                    //     );
+                    //     _formKey.currentState!.reset();
+                    //   }
+                    // },
                     child: const Text(
                       "Save",
                       style: TextStyle(color: Colors.white),
