@@ -1,4 +1,5 @@
-# README.md for Tugas 7
+<details>
+<summary>README.md for Tugas 7</summary>
 
 ## JAWABAN UNTUK PERTANYAAN TUGAS 6
 ### 1) Jelaskan apa itu widget tree pada Flutter dan bagaimana hubungan parent-child (induk-anak) bekerja antar widget.
@@ -45,3 +46,22 @@ Dalam metode build, BuildContext digunakan sebagai parameter yang menyediakan ak
 Hot reload merupakan fitur pada Flutter yang memungkinkan pengembang melihat hasil perubahan kode secara instan tanpa menghapus state yang sedang berjalan. Saat perubahan disimpan, Flutter hanya memperbarui bagian kode yang dimodifikasi dan mempertahankan data maupun posisi terakhir aplikasi. Fitur ini mempercepat serta mempermudah proses pengembangan karena tidak perlu menjalankan aplikasi dari awal setiap kali ada perubahan kecil.
 
 Sebaliknya, hot restart akan memulai ulang seluruh aplikasi dari awal dan menghapus semua state yang tersimpan. Flutter akan membangun kembali seluruh widget tree seperti saat pertama kali dijalankan. Fitur ini umumnya digunakan ketika perubahan dilakukan pada bagian inisialisasi variabel global, struktur state, atau aspek lain yang tidak dapat diperbarui melalui hot reload.
+</details>
+
+# README.md for Tugas 8
+
+## 1) Jelaskan perbedaan antara Navigator.push() dan Navigator.pushReplacement() pada Flutter. Dalam kasus apa sebaiknya masing-masing digunakan pada aplikasi Football Shop kamu?
+Dalam Flutter, baik Navigator.push() maupun Navigator.pushReplacement() digunakan untuk berpindah antar halaman, tetapi keduanya memiliki perbedaan cara kerja. Navigator.push() menambahkan halaman baru di atas tumpukan halaman yang ada, sehingga pengguna masih bisa kembali ke halaman sebelumnya. Sementara itu, Navigator.pushReplacement() menggantikan halaman saat ini dengan halaman baru, sehingga halaman sebelumnya dihapus dan tidak bisa dikembalikan.
+
+Dalam penerapannya, misalnya ketika membuka halaman Add Product dari ItemCard di Home Page, sebaiknya gunakan Navigator.push() agar pengguna bisa kembali ke halaman sebelumnya (Home). Namun, untuk navigasi melalui drawer, lebih tepat menggunakan Navigator.pushReplacement(), karena jika hanya menggunakan push(), tombol kembali bisa membawa pengguna ke halaman yang tidak sesuai (misalnya bukan ke Home). Dengan Navigator.pushReplacement(), halaman diganti sepenuhnya dengan halaman yang dipilih dari drawer.
+
+## 2) Bagaimana kamu memanfaatkan hierarchy widget seperti Scaffold, AppBar, dan Drawer untuk membangun struktur halaman yang konsisten di seluruh aplikasi?
+Untuk menciptakan struktur halaman yang konsisten di seluruh aplikasi, digunakan Scaffold. Dalam Flutter, Scaffold berfungsi sebagai kerangka utama halaman yang menjadi tempat bagi elemen-elemen antarmuka seperti AppBar, Body, dan Drawer, sehingga setiap halaman memiliki struktur yang rapi dan konsisten. AppBar digunakan sebagai bagian atas atau header halaman yang menampilkan judul, ikon, maupun tombol aksi, dengan tujuan menjaga keseragaman tampilan di seluruh aplikasi. Sementara itu, Drawer berperan sebagai menu navigasi samping yang memudahkan pengguna untuk berpindah antar halaman. Setiap item pada Drawer mengarahkan pengguna ke halaman yang sesuai, sehingga navigasi aplikasi menjadi lebih teratur dan konsisten.
+
+## 3) Dalam konteks desain antarmuka, apa kelebihan menggunakan layout widget seperti Padding, SingleChildScrollView, dan ListView saat menampilkan elemen-elemen form? Berikan contoh penggunaannya dari aplikasi kamu.
+Contoh dari aplikasi saya adalah penggunaan layout widget. Penggunaan layout widget dalam desain membantu membuat tampilan form menjadi lebih teratur dan enak dilihat. Dalam aplikasi, Padding berfungsi untuk memberikan jarak antara elemen form dan tepi layar agar tidak terlihat terlalu rapat. SingleChildScrollView digunakan ketika form memiliki banyak field, sehingga pengguna dapat menggulir halaman ke bawah tanpa menyebabkan tampilan error dan tetap dapat mengakses seluruh input. Sementara itu, ListView dipakai untuk menampilkan kumpulan item seperti daftar menu “Home” dan “Add Product”, yang dapat digulir ke bawah jika jumlah menu terlalu banyak.
+
+## 4) Bagaimana kamu menyesuaikan warna tema agar aplikasi Football Shop memiliki identitas visual yang konsisten dengan brand toko?
+Penyesuaian warna dapat dilakukan dengan mengubah warna pada elemen-elemen utama seperti AppBar, ItemCard, dan Drawer. Penggunaan warna yang konsisten di seluruh halaman akan membantu menciptakan identitas visual yang kuat untuk aplikasi RADKICKS.
+
+Dalam contoh aplikasi, tema diatur di main.dart dengan primarySwatch: Colors.blue sebagai warna utama, yang kemudian digunakan pada AppBar di menu.dart melalui Theme.of(context).colorScheme.primary, serta di DrawerHeader pada left_drawer.dart dengan color: Colors.blue. Namun, di productlist_form.dart, AppBar masih menggunakan Colors.indigo secara manual, sehingga menimbulkan ketidakkonsistenan. Untuk menjaga keseragaman dan memperkuat identitas visual, layaknya tema utama diubah langsung di main.dart dengan mengganti primarySwatch menjadi Colors.indigo atau sebaliknya.
