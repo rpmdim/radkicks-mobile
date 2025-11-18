@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:radkicks/screens/menu.dart';
 import 'package:radkicks/screens/productlist_form.dart';
 import 'package:radkicks/screens/product_entry_list.dart';
+import 'package:radkicks/screens/my_product_entry_list.dart';
 
 class LeftDrawer extends StatelessWidget {
   const LeftDrawer({super.key});
@@ -69,6 +70,18 @@ class LeftDrawer extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => const ProductEntryListPage(),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.person),
+            title: const Text('My Products'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const MyProductEntryListPage(),
                 ),
               );
             },

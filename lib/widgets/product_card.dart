@@ -4,6 +4,7 @@ import 'package:radkicks/screens/product_entry_list.dart';
 import 'package:radkicks/screens/login.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
+import 'package:radkicks/screens/my_product_entry_list.dart';
 
 class ItemHomepage {
   final String name;
@@ -71,6 +72,13 @@ class ItemCard extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => const ProductEntryListPage(),
+              ),
+            );
+          } else if (item.name == "My Products") {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const MyProductEntryListPage(),
               ),
             );
           }
