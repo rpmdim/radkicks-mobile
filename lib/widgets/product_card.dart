@@ -97,6 +97,8 @@ class ItemCard extends StatelessWidget {
                   item.name,
                   textAlign: TextAlign.center,
                   style: const TextStyle(color: Colors.white),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),

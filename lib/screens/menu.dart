@@ -5,11 +5,6 @@ import 'package:radkicks/widgets/product_card.dart';
 class MyHomePage extends StatelessWidget {
   MyHomePage({super.key});
 
-  final String nama =
-      "Raden Pandji Mohammad Dimaz Bagus Hayyii Dausti Surya"; //nama
-  final String npm = "2406439343"; //npm
-  final String kelas = "C"; //kelas
-
   final List<ItemHomepage> items = [
     ItemHomepage("All Products", Icons.list_alt_rounded, Colors.blue),
     ItemHomepage("My Products", Icons.shopping_bag_rounded, Colors.green),
@@ -37,16 +32,6 @@ class MyHomePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Row untuk menampilkan 3 InfoCard secara horizontal.
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                InfoCard(title: 'NPM', content: npm),
-                InfoCard(title: 'Name', content: nama),
-                InfoCard(title: 'Class', content: kelas),
-              ],
-            ),
-
             // Memberikan jarak vertikal 16 unit.
             const SizedBox(height: 16.0),
 
@@ -67,20 +52,38 @@ class MyHomePage extends StatelessWidget {
                     ),
                   ),
 
-                  // Grid untuk menampilkan ItemCard dalam bentuk grid 3 kolom.
-                  GridView.count(
-                    primary: false,
-                    padding: const EdgeInsets.all(12),
-                    crossAxisSpacing: 12,
-                    mainAxisSpacing: 12,
-                    crossAxisCount: 4,
-                    childAspectRatio: 0.9,
-                    // tadinya padding 20, crossAxisSpacing 10, mainAxisSpacing 10,
-                    // crossAxisCount 3, childAspectRatio gaada
-                    shrinkWrap: true,
-                    children: items.map((ItemHomepage item) {
-                      return ItemCard(item);
-                    }).toList(),
+                  // Responsive grid using Wrap: adapts number of columns by width
+                  LayoutBuilder(
+                    builder: (context, constraints) {
+                      final width = constraints.maxWidth;
+                      final int crossAxisCount = width > 900
+                          ? 4
+                          : (width > 600 ? 3 : 2);
+                      final spacing = 12.0;
+                      final horizontalPadding = 24.0; // parent paddings
+                      final itemWidth =
+                          (width -
+                              horizontalPadding -
+                              (spacing * (crossAxisCount - 1))) /
+                          crossAxisCount;
+
+                      return Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Wrap(
+                          spacing: spacing,
+                          runSpacing: spacing,
+                          alignment: WrapAlignment.center,
+                          children: items
+                              .map(
+                                (ItemHomepage item) => SizedBox(
+                                  width: itemWidth.clamp(120.0, 220.0),
+                                  child: ItemCard(item),
+                                ),
+                              )
+                              .toList(),
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),

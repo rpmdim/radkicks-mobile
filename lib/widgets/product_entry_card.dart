@@ -85,12 +85,26 @@ class ProductEntryCard extends StatelessWidget {
                 Row(
                   children: [
                     Icon(Icons.star, color: Colors.amber.shade600, size: 18),
-                    const SizedBox(width: 4),
+                    const SizedBox(width: 6),
                     Text(product.rating.toStringAsFixed(1)),
-                    const Spacer(),
-                    Text('Brand: ${product.brand}'),
                     const SizedBox(width: 12),
-                    Text('Size: ${product.size}'),
+                    // Brand can be long; allow it to take remaining space and ellipsize
+                    Expanded(
+                      child: Text(
+                        'Brand: ${product.brand}',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 72),
+                      child: Text(
+                        'Size: ${product.size}',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
                   ],
                 ),
                 if (product.isFeatured)
